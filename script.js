@@ -6,18 +6,21 @@ let ready = false;
 let imagesLoaded = 0;
 let totalImages = 0;
 let photosArray = [];
+let initialLoad = true;
 
 // Unsplash API
-const count = 30;
+const imageCounterInitial = 5;
 const apiKey = 'sImUAXg1pSAoHF1_S01fQZ_baENEpSgkZw_MncIW69g';
-const apiUrl = `https://api.unsplash.com/photos/random?client_id=${apiKey}&count=${count}`;
+let apiUrl = `https://api.unsplash.com/photos/random?client_id=${apiKey}&imageCounterInitial=${imageCounterInitial}`;
 
 // Check if all images were loaded
-function imageLoaded() {
+function imageLoaderInitial() {
   imagesLoaded++;
   if (imagesLoaded === totalImages) {
     ready = true;
     loader.hidden = true;
+    initialLoad = false;
+    imageCounterInitial = 30;
   }
 }
 
@@ -48,7 +51,7 @@ function displayPhotos() {
       title: photo.alt_description,
     });
     // Event Listener, check when each is finished loading
-    img.addEventListener('load', imageLoaded);
+    img.addEventListener('load', imageLoaderInitial);
     // Put <img> inside <a>, then put both inside imageContainer Element
     item.appendChild(img);
     imageContainer.appendChild(item);
